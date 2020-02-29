@@ -1,0 +1,52 @@
+---
+title: "Assignment 2"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+For this Assignment, you will use the attached dataset. The goal of this assignment is to practice visualization tools in R. 
+
+1. Load the data as a data frame. (1 point)
+
+```{r}
+
+Top50Movies <- read.csv("Top50Movies.csv")
+
+
+```
+
+2. Explore the relationship between the year released and inflation-adjusted U.S. box office receipts. Which plotting tool should you use for this purpose? Explain your findings. (2 points)
+
+```{r}
+library(ggplot2)
+
+library(ggrepel)
+
+ggplot(data=Top50Movies,aes(x=Year.Released,y=as.numeric(gsub(",","",U.S..Box.Office.Receipts..Inflation.Adjusted.Millions...))))+geom_point()+geom_line()+xlab("Year Released") + ylab("U.S.Box Office Receipt-Inflation Adjusted(million $)")+geom_text_repel(aes(label=U.S..Box.Office.Receipts..Inflation.Adjusted.Millions...),segment.color = "blue" )+scale_y_continuous(limits = c(400,1750))
+
+###From the plot, we can conclude that the highest box office receipt was recorded at 1650 million dollars in the year 1939 and the lowest reciept was noticed at 494 million dollars in the year 1939.
+
+```
+
+3. Explore the relationship between noninflation-adjusted budget and noninflation-adjusted world box office receipts. Explain your findings. (2 points)
+
+```{r}
+
+ggplot(data=Top50Movies,aes(x=as.numeric(Top50Movies$Budget..Non.Inflation.Adjusted.Millions...),y=as.numeric(gsub(",","",Top50Movies$World.Box.Office.Receipts..Non.Inflation.Adjusted.Millions...))))+geom_point()+geom_line()+xlab("Budget-Non inflation(Million $)")+ylab("World box office-non inflation(million $)")+geom_text_repel(aes(label=World.Box.Office.Receipts..Non.Inflation.Adjusted.Millions...),segment.color = "blue" )
+
+###Highest world box office non inflation adjusted receipt was 2778 million dollars where budget was around 17 million dollars. 
+
+```
+
+4. Explore the relationship between inflation-adjusted budget and inflation-adjusted world box office receipts. Explain your findings. (2 points)
+
+5. Use a proper plotting tool to how the distribution of inflation-adjusted U.S. box office receipts. (2 points)
+
+6. Compare U.S. Box Office Receipts from each decade. Which plotting tool can be used here? Explain your findings. ( 2 points)
+
+7. Show the temporal pattern of U.S. Box Office Receipts. Which plotting tool can be used here. Explain your findings. (2 points)
+
+8. Explore the data yourself. Share an interesting finding that has not been explored above. (2 points)
